@@ -6,9 +6,10 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.utils.FileUpload;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class SummaryCommand extends Command {
@@ -19,8 +20,8 @@ public class SummaryCommand extends Command {
         ArrayList<Entry> entries = Competition.getInstance().getEntries();
 
         try {
-            File tempFile = File.createTempFile("summary", ".txt");
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+            Path tempFile = Files.createTempFile("summary", ".txt");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile.toFile()));
 
             int count = 0;
             for (Entry e : entries) {
@@ -28,15 +29,22 @@ public class SummaryCommand extends Command {
                 count++;
             }
 
-            System.out.println(tempFile.getAbsolutePath());
-
             writer.close();
 
             event.getHook().sendMessage("Here's the current summary:")
                     .addFiles(FileUpload.fromData(tempFile)).queue();
-
+            
+            deleteFile(tempFile);
         } catch (IOException e){
             System.out.println(e);
+        }
+    }
+
+    public void deleteFile(Path tempFile) throws IOException {
+        if (Files.deleteIfExists(tempFile)){
+            System.out.println("file was deleted");
+        } else {
+            System.out.println("file was not deleted");
         }
     }
 }

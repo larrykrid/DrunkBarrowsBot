@@ -1,8 +1,5 @@
 package data;
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-
 import java.util.ArrayList;
 
 public class Competition {

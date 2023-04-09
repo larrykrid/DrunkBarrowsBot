@@ -15,6 +15,10 @@ public class mainClass extends ListenerAdapter {
     public static void main(String[] args){
         String token = "";
 
+        if (args[0] != null){
+            token = args[0];
+        }
+
         JDA jda = JDABuilder.createDefault(token)
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -42,7 +46,7 @@ public class mainClass extends ListenerAdapter {
                         .addOptions(barrowsItems),
                 Commands.slash("brotheroftheday", "Set the brother of the day. Select \"None\" to clear.")
                         .addOptions(brothers),
-                Commands.slash("finish", "Finishes the currently running Drunk Barrows event."),
+                Commands.slash("leaderboard", "Shows the top 10 of the current running event."),
                 Commands.slash("summary", "Print the current state of the event without finishing it."),
                 Commands.slash("remove", "Removes 1 entry from the competition. Only use in case of accidental duplication.")
                         .addOption(OptionType.INTEGER, "index", "The number in front of the entry in the summary. Must be a number.", true)
@@ -57,7 +61,7 @@ public class mainClass extends ListenerAdapter {
             switch (event.getName()){
                 case "add" -> c = new AddCommand();
                 case "brotheroftheday" -> c = new BrotherOfTheDayCommand();
-                case "finish" -> c = new FinishCommand();
+                case "leaderboard" -> c = new LeaderboardCommand();
                 case "summary" -> c = new SummaryCommand();
                 case "remove" -> c = new RemoveCommand();
                 default -> event.reply("Something went wrong. Please try again.").queue();

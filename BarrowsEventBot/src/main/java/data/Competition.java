@@ -40,6 +40,8 @@ public class Competition {
         return calculateWinner();
     }
 
+    public ArrayList<Entry> getEntries() { return entries; }
+
     private Winners calculateWinner() {
         Winners winners = new Winners();
 
@@ -51,27 +53,6 @@ public class Competition {
             }
         }
         return winners;
-    }
-
-    public void printEventSummary(SlashCommandInteractionEvent event) {
-        Long channelId = Long.parseLong("959526827515338752");
-
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle("Drunk Barrows event summary");
-
-        String entrs = "";
-        int count = 0;
-        for (Entry e : entries){
-            entrs += "%s : %s : %s\n".formatted(count, event.getGuild().getMemberById(e.owner).getAsMention(), e.item.toString());
-            count++;
-
-            if (count %10 == 0 || count == entries.size()){
-                builder.addField("", entrs, false);
-                entrs = "";
-            }
-        }
-
-        event.getGuild().getTextChannelById(channelId).sendMessageEmbeds(builder.build()).queue();
     }
 
     public void removeEntry(int index) {

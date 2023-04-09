@@ -31,6 +31,7 @@ public class Competition {
             case "Torag" -> itemsOfTheDay = new ArrayList<BarrowsItem>() {{add(BarrowsItem.TORAGS_HELM); add(BarrowsItem.TORAGS_HAMMERS); add(BarrowsItem.TORAGS_PLATEBODY); add(BarrowsItem.TORAGS_PLATELEGS);}};
             case "Karil" -> itemsOfTheDay = new ArrayList<BarrowsItem>() {{ add(BarrowsItem.KARILS_COIF); add(BarrowsItem.KARILS_TOP); add(BarrowsItem.KARILS_CROSSBOW); add(BarrowsItem.KARILS_SKIRT); }};
             case "Guthan" -> itemsOfTheDay = new ArrayList<BarrowsItem>() {{ add(BarrowsItem.GUTHANS_HELM); add(BarrowsItem.GUTHANS_SKIRT); add(BarrowsItem.GUTHANS_SPEAR); add(BarrowsItem.GUTHANS_PLATEBODY); }};
+            case "None" -> itemsOfTheDay = null;
             default -> itemsOfTheDay = null;
         }
     }

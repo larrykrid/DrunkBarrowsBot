@@ -33,13 +33,14 @@ public class mainClass extends ListenerAdapter {
 
         OptionData brothers = new OptionData(OptionType.STRING, "brother", "The Barrows Brother of which the items must be received.", true)
                 .addChoice("Ahrim", "Ahrim") . addChoice("Dharok", "Dharok").addChoice("Verac", "Verac")
-                .addChoice("Torag", "Torag").addChoice("Karil", "Karil").addChoice("Guthan", "Guthan");
+                .addChoice("Torag", "Torag").addChoice("Karil", "Karil").addChoice("Guthan", "Guthan")
+                .addChoice("None", "None");
 
         jda.updateCommands().addCommands(
                 Commands.slash("add", "Adds a new entry into this Barrows competition.")
                         .addOption(OptionType.USER, "name", "The person that got the item. Use the @ discord tag.", true)
                         .addOptions(barrowsItems),
-                Commands.slash("brotheroftheday", "Set the brother of the day. Cannot be undone, but can be changed!")
+                Commands.slash("brotheroftheday", "Set the brother of the day. Select \"None\" to clear.")
                         .addOptions(brothers),
                 Commands.slash("finish", "Finishes the currently running Drunk Barrows event."),
                 Commands.slash("summary", "Print the current state of the event without finishing it."),

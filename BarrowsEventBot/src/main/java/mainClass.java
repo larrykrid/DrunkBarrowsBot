@@ -1,8 +1,10 @@
 import commands.*;
+import data.Competition;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -49,7 +51,8 @@ public class mainClass extends ListenerAdapter {
                 Commands.slash("leaderboard", "Shows the top 10 of the current running event."),
                 Commands.slash("summary", "Print the current state of the event without finishing it."),
                 Commands.slash("remove", "Removes 1 entry from the competition. Only use in case of accidental duplication.")
-                        .addOption(OptionType.INTEGER, "index", "The number in front of the entry in the summary. Must be a number.", true)
+                        .addOption(OptionType.INTEGER, "index", "The number in front of the entry in the summary. Must be a number.", true),
+                Commands.slash("clear", "Clear the current competition data.")
         ).queue();
 
     }
@@ -64,10 +67,24 @@ public class mainClass extends ListenerAdapter {
                 case "leaderboard" -> c = new LeaderboardCommand();
                 case "summary" -> c = new SummaryCommand();
                 case "remove" -> c = new RemoveCommand();
+                case "clear" -> c = new ClearCommand();
                 default -> event.reply("Something went wrong. Please try again.").queue();
             }
 
             if (c != null)
                 c.execute(event);
+    }
+
+    @Override
+    public void onButtonInteraction(ButtonInteractionEvent event) {
+        switch (event.getComponentId()) {
+            case "clearYes" -> {
+                Competition.getInstance().resetCompetition();
+                event.reply("Competition has been cleared.").setEphemeral(true).queue();
+            }
+            case "clearCancel" -> {
+                event.reply("Clearing competition cancelled.").setEphemeral(true).queue();
+            }
+        }
     }
 }

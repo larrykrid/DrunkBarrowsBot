@@ -29,8 +29,6 @@ public class SummaryCommand extends Command {
                 count++;
             }
 
-            System.out.println(tempFile);
-
             writer.close();
 
             event.getHook().sendMessage("Here's the current summary:")

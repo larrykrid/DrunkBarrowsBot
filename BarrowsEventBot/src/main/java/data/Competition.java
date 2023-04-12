@@ -2,6 +2,8 @@ package data;
 
 import java.util.ArrayList;
 
+import util.JsonWriter;
+
 public class Competition {
 
     private static Competition instance;
@@ -17,6 +19,7 @@ public class Competition {
 
     public void addEntry(Entry entry){
         entries.add(entry);
+        JsonWriter.getWriter().addJsonEntry(entry);
     }
 
     public void setBrotherOfTheDay(String brother) {
